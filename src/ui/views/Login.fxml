@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="ui.controllers.LoginController" spacing="10" alignment="CENTER" 
+      style="-fx-padding: 20; -fx-background-color: #f0f8ff;">
+
+    <Label text="PlantCare - Acesso" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+    
+    <TextField fx:id="txtUsuario" promptText="Nome de Usuário"/>
+    <TextField fx:id="txtEmail" promptText="E-mail"/>
+    
+    <ComboBox fx:id="cbTipoAcesso" promptText="Selecione o tipo de acesso"/>
+    
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Entrar" onAction="#handleLogin" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Cadastrar" onAction="#handleCadastro"/>
+    </HBox>
+
+    <Label fx:id="lblMensagem" style="-fx-text-fill: red;"/>
+</VBox>
