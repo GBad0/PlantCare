@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="ui.controllers.MainDashboardController" stylesheets="@styles.css">
+
+    <left>
+        <VBox spacing="10" style="-fx-padding: 20; -fx-background-color:rgb(135, 136, 138);">
+            <Label text="PlantCare" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+            
+            <Button text="Listar Plantas e Quantidade" onAction="#showPlantList" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Nova Plantação" onAction="#showNewPlantation" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Adicionar Anotações" onAction="#showAddNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Ler Anotações" onAction="#showNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Colheita" onAction="#showColheita" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Previsão do tempo" onAction="#showPrevisaotempo" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            
+            <Separator/>
+            <Button text="Sair" onAction="#handleLogout" style="-fx-min-width: 150;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentArea" style="fx-background-color:rgb(135, 136, 138);">
+            <!-- Aqui será carregado o conteúdo dinâmico -->
+            <Label text="Selecione uma opção no menu" style="-fx-font-size: 16;"/>
+        </StackPane>
+    </center>
+</BorderPane>

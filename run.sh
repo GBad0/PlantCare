@@ -12,6 +12,9 @@ mkdir -p $OUT_DIR/ui/controllers
 
 # Copia recursos
 cp src/ui/views/Login.fxml $OUT_DIR/ui/views/
+cp src/ui/views/MainDashboard.fxml $OUT_DIR/ui/views/
+cp src/ui/views/ListaPlantas.fxml $OUT_DIR/ui/views/
+cp src/ui/views/*.css $OUT_DIR/ui/views/ 2>/dev/null || :  # Ignora se não existir CSS
 
 # Compilação
 javac --module-path $PATH_TO_FX --add-modules javafx.controls,javafx.fxml -d $OUT_DIR $(find src -name "*.java")
