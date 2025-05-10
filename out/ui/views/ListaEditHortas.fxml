@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      spacing="10" style="-fx-padding: 20;">
+    
+    <Label text="Editar Hortas" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    
+    <TableView>
+        <columns>
+            <TableColumn text="Nome"/>
+            <TableColumn text="Tipo"/>
+            <TableColumn text="Última Regagem"/>
+        </columns>
+    </TableView>
+</VBox>

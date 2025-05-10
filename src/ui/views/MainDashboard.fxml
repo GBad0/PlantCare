@@ -11,8 +11,9 @@
         <VBox spacing="10" style="-fx-padding: 20; -fx-background-color:rgb(135, 136, 138);">
             <Label text="PlantCare" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
             
-            <Button text="Listar Plantas e Quantidade" onAction="#showPlantList" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
-            <Button text="Nova Plantação" onAction="#showNewPlantation" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Listar Hortas" onAction="#showHortasList" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Adicionar Horta" onAction="#showNewHorta" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Button text="Editar Horta" onAction="#showEditHorta" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
             <Button text="Adicionar Anotações" onAction="#showAddNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
             <Button text="Ler Anotações" onAction="#showNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
             <Button text="Colheita" onAction="#showColheita" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>

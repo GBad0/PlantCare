@@ -13,7 +13,13 @@ mkdir -p $OUT_DIR/ui/controllers
 # Copia recursos
 cp src/ui/views/Login.fxml $OUT_DIR/ui/views/
 cp src/ui/views/MainDashboard.fxml $OUT_DIR/ui/views/
-cp src/ui/views/ListaPlantas.fxml $OUT_DIR/ui/views/
+cp src/ui/views/ListaHortas.fxml $OUT_DIR/ui/views/
+cp src/ui/views/ListaEditHortas.fxml $OUT_DIR/ui/views/
+cp src/ui/views/NewHortas.fxml $OUT_DIR/ui/views/
+cp src/ui/views/ListaNotes.fxml $OUT_DIR/ui/views/
+cp src/ui/views/ListaAddNotes.fxml $OUT_DIR/ui/views/
+cp src/ui/views/PrevisaoTempo.fxml $OUT_DIR/ui/views/
+cp src/ui/views/Colheita.fxml $OUT_DIR/ui/views/
 cp src/ui/views/*.css $OUT_DIR/ui/views/ 2>/dev/null || :  # Ignora se não existir CSS
 
 # Compilação

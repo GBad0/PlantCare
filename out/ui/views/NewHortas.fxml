@@ -6,7 +6,7 @@
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
       spacing="10" style="-fx-padding: 20;">
     
-    <Label text="Lista de Plantas" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    <Label text="Nova Horta" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
     
     <TableView>
         <columns>
