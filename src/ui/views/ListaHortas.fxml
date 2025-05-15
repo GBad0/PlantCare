@@ -11,8 +11,12 @@
     <TableView>
         <columns>
             <TableColumn text="Nome"/>
-            <TableColumn text="Tipo"/>
-            <TableColumn text="Última Regagem"/>
+            <TableColumn text="Plantação"/>
+            <TableColumn text="Sementes Plantadas"/>
+            <TableColumn text="Responsavel"/>
+            <TableColumn text="Data de Plantação"/>
+            <TableColumn text="Localização"/>
         </columns>
+        <!-- FAZER BOTAO QUE EDITA HORTA NOS ITEMS -->
     </TableView>
 </VBox>

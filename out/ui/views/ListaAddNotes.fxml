@@ -8,11 +8,5 @@
     
     <Label text="Adicionar Anotações" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
     
-    <TableView>
-        <columns>
-            <TableColumn text="Nome"/>
-            <TableColumn text="Tipo"/>
-            <TableColumn text="Última Regagem"/>
-        </columns>
-    </TableView>
+    <!-- TELA DE AADICIONAR ANOTAÇÕES ONDE VOCE PODE ADICIONAR UM TITULO, UMA DESCRICAO, SELECIONAR UMA HORTA E UM AUTOR -->
 </VBox>

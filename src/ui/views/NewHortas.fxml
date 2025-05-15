@@ -2,17 +2,37 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.collections.FXCollections?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
-      spacing="10" style="-fx-padding: 20;">
+      fx:controller="ui.controllers.NovaHortaController" spacing="15" style="-fx-padding: 25; -fx-background-color: #f5f5f5;">
     
-    <Label text="Nova Horta" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    <Label text="Nova Horta" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
     
-    <TableView>
-        <columns>
-            <TableColumn text="Nome"/>
-            <TableColumn text="Tipo"/>
-            <TableColumn text="Última Regagem"/>
-        </columns>
-    </TableView>
+    <GridPane hgap="10" vgap="10">
+        <Label text="Nome da Horta:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtNome" promptText="Ex: Horta da Tia Maria" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        
+        <Label text="Tipo de Plantação:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbPlantacao" promptText="Selecione" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        
+        <Label text="Quantidade de Sementes:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtQuantidade" promptText="Número de sementes" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        
+        <Label text="Responsável:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtResponsavel" promptText="Nome do responsável" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        
+        <Label text="Data de Plantação:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpDataPlantacao" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        
+        <Label text="Localização:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtLocalizacao" promptText="Ex: Setor 3, Canteiro B" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+    </GridPane>
+    
+    <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
+        <Button text="Salvar" onAction="#handleSalvar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
 </VBox>

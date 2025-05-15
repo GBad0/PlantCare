@@ -13,7 +13,7 @@
             
             <Button text="Listar Hortas" onAction="#showHortasList" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
             <Button text="Adicionar Horta" onAction="#showNewHorta" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
-            <Button text="Editar Horta" onAction="#showEditHorta" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <!-- <Button text="Editar Horta" onAction="#showEditHorta" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/> -->
             <Button text="Adicionar Anotações" onAction="#showAddNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
             <Button text="Ler Anotações" onAction="#showNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
             <Button text="Colheita" onAction="#showColheita" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>

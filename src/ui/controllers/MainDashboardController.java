@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 import java.io.IOException;
 
@@ -21,7 +24,7 @@ public class MainDashboardController {
 
     @FXML
     private void showEditHorta() {
-        loadView("ListaEditHortas.fxml"); // Você precisará criar este arquivo depois
+        loadView("EditHortas.fxml"); // Você precisará criar este arquivo depois
         // EXIBIR "AS HORTAS" E UM BOTAO DE EDITAR/EXCLUIR E AO CLICAR NO EDITAR ELE ABRE PAGINA DE EDITAR A HORTA
         // Q TERA OS CAMPOS EDITAVEIS DA ORTA INCLINDO PLANTACAO 
 
@@ -30,8 +33,8 @@ public class MainDashboardController {
 
     @FXML
     private void showNewHorta() {
-        loadView("NewHortas.fxml"); // Você precisará criar este arquivo depois
-        //CRIARA UMA NOVA ORTA COM NOVA PLANTACAO TUDO DE NOVO
+        loadView("NewHortas.fxml");
+       
     }
 
     @FXML

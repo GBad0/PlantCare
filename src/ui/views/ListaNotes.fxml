@@ -10,9 +10,10 @@
     
     <TableView>
         <columns>
-            <TableColumn text="Nome"/>
-            <TableColumn text="Tipo"/>
-            <TableColumn text="Última Regagem"/>
+            <TableColumn text="Titulo da Anotação"/>
+            <TableColumn text="Descrição"/>
+            <TableColumn text="Horta"/>
+            <TableColumn text="Autor"/>
         </columns>
     </TableView>
 </VBox>
