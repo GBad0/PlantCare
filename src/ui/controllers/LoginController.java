@@ -50,43 +50,18 @@ public class LoginController {
     }
 
     @FXML
-    private void successLogin(){
-         try {
-            // Usando caminho absoluto como fallback
-            URL fxmlLocation;
-            try {
-                // Primeiro tenta pelo classpath (recomendado)
-                fxmlLocation = getClass().getResource("/ui/views/MainDashboard.fxml");
-                if (fxmlLocation == null) {
-                    // Fallback para caminho absoluto (apenas para desenvolvimento)
-                    fxmlLocation = new File("src/ui/views/MainDashboard.fxml").toURI().toURL();
-                    System.out.println("Usando fallback para: " + fxmlLocation);
-                }
-            } catch (Exception e) {
-                throw new IOException("Não foi possível localizar o arquivo MainDashboard.fxml", e);
-            }
-
-            FXMLLoader loader = new FXMLLoader(fxmlLocation);
-            Parent dashboard = loader.load();
-            
-            // Configuração da nova cena
-            Scene dashboardScene = new Scene(dashboard, 800, 600);
-            
-            // Obtém a janela atual e aplica a nova cena
+    private void successLogin() {
+        try {
+            Parent dashboard = FXMLLoader.load(getClass().getResource("/ui/views/MainDashboard.fxml"));
             Stage currentStage = (Stage) txtUsuario.getScene().getWindow();
-            currentStage.setScene(dashboardScene);
-            currentStage.setTitle("PlantCare - Dashboard");
-            currentStage.centerOnScreen();
+            
+            currentStage.setScene(new Scene(dashboard));
+            currentStage.setFullScreen(true); // Mantém tela cheia
+            currentStage.show();
             
         } catch (IOException e) {
-            showError("Falha ao carregar o dashboard: " + e.getMessage());
-            e.printStackTrace();
-            
-            // Mostra alerta detalhado em caso de erro
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro de Carregamento");
-            alert.setHeaderText("Não foi possível carregar a tela principal");
-            alert.setContentText(e.toString());
+            alert.setContentText("Erro ao carregar a tela principal: " + e.getMessage());
             alert.showAndWait();
         }
     }

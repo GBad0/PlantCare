@@ -63,6 +63,7 @@ public class MainDashboardController {
         try {
             Parent loginView = FXMLLoader.load(getClass().getResource("/ui/views/Login.fxml"));
             contentArea.getScene().setRoot(loginView);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

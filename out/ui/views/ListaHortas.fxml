@@ -4,19 +4,23 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="ui.controllers.ListaHortasController"
       spacing="10" style="-fx-padding: 20;">
     
     <Label text="Lista de Hortas" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
     
-    <TableView>
+    <TableView fx:id="tabelaHortas">
         <columns>
-            <TableColumn text="Nome"/>
-            <TableColumn text="Plantação"/>
-            <TableColumn text="Sementes Plantadas"/>
-            <TableColumn text="Responsavel"/>
-            <TableColumn text="Data de Plantação"/>
-            <TableColumn text="Localização"/>
+            <TableColumn fx:id="colNome" text="Nome"/>
+            <TableColumn fx:id="colPlantacao" text="Plantação"/>
+            <TableColumn fx:id="colQuantidade" text="Sementes Plantadas"/>
+            <TableColumn fx:id="colResponsavel" text="Responsavel"/>
+            <TableColumn fx:id="colData" text="Data de Plantação"/>
+            <TableColumn fx:id="colLocalizacao" text="Localização"/>
         </columns>
-        <!-- FAZER BOTAO QUE EDITA HORTA NOS ITEMS -->
     </TableView>
+     <HBox spacing="10">
+        <Button text="Editar" onAction="#handleEditar" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+        <Button text="Atualizar" onAction="#handleAtualizar" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    </HBox>
 </VBox>
