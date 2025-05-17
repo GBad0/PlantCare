@@ -2,25 +2,42 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
       fx:controller="ui.controllers.ListaHortasController"
-      spacing="10" style="-fx-padding: 20;">
-    
-    <Label text="Lista de Hortas" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
-    
-    <TableView fx:id="tabelaHortas">
+      spacing="20" style="-fx-padding: 30; -fx-background-color: #f5f5f5;">
+
+    <!-- Cabeçalho -->
+    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 0 0 15 0;">
+        <!-- <Label text="🌱" style="-fx-font-size: 28;"/> -->
+        <VBox>
+            <Label text="Lista de Hortas" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #2e8b57;"/>
+            <Label text="Visualização e gestão das hortas cadastradas" style="-fx-font-size: 13; -fx-text-fill: #666;"/>
+        </VBox>
+    </HBox>
+
+    <!-- Tabela -->
+    <TableView fx:id="tabelaHortas" style="-fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);">
         <columns>
-            <TableColumn fx:id="colNome" text="Nome"/>
-            <TableColumn fx:id="colPlantacao" text="Plantação"/>
-            <TableColumn fx:id="colQuantidade" text="Sementes Plantadas"/>
-            <TableColumn fx:id="colResponsavel" text="Responsavel"/>
-            <TableColumn fx:id="colData" text="Data de Plantação"/>
-            <TableColumn fx:id="colLocalizacao" text="Localização"/>
+            <TableColumn fx:id="colNome" text="Nome" style="-fx-font-size: 14; -fx-alignment: CENTER_LEFT;"/>
+            <TableColumn fx:id="colPlantacao" text="Plantação" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+            <TableColumn fx:id="colQuantidade" text="Sementes" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+            <TableColumn fx:id="colResponsavel" text="Responsável" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+            <TableColumn fx:id="colData" text="Data de Plantação" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+            <TableColumn fx:id="colLocalizacao" text="Localização" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
         </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
     </TableView>
-     <HBox spacing="10">
-        <Button text="Editar" onAction="#handleEditar" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
-        <Button text="Atualizar" onAction="#handleAtualizar" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+    <!-- Rodapé com botões -->
+    <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 15 0 0 0;">
+        <Button text="Editar" onAction="#handleEditar" 
+                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-pref-width: 120; -fx-pref-height: 40; -fx-background-radius: 5;"/>
+        <Button text="Atualizar" onAction="#handleAtualizar" 
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-pref-width: 120; -fx-pref-height: 40; -fx-background-radius: 5;"/>
     </HBox>
 </VBox>
