@@ -8,3 +8,35 @@
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
+
+/* Estilo dos botões do menu */
+.menu-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-min-width: 300px;
+    -fx-min-height: 40px;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+.menu-button:hover {
+    -fx-background-color: #45a049;
+    -fx-cursor: hand;
+}
+
+/* Estilo do botão Sair */
+.logout-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-min-width: 300px;
+    -fx-min-height: 40px;
+    -fx-background-radius: 5;
+}
+
+.logout-button:hover {
+    -fx-background-color: #d32f2f;
+    -fx-cursor: hand;
+}

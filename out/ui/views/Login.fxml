@@ -2,22 +2,47 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="ui.controllers.LoginController" spacing="10" alignment="CENTER" 
-      style="-fx-padding: 20; -fx-background-color: #f0f8ff;">
+      fx:controller="ui.controllers.LoginController" 
+      spacing="20" 
+      alignment="CENTER" 
+      style="-fx-padding: 40; -fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);">
 
-    <Label text="PlantCare - Acesso" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
-    
-    <TextField fx:id="txtUsuario" promptText="Nome de Usuário"/>
-    <TextField fx:id="txtEmail" promptText="E-mail"/>
-    
-    <ComboBox fx:id="cbTipoAcesso" promptText="Selecione o tipo de acesso"/>
-    
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Entrar" onAction="#handleLogin" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
-        <Button text="Cadastrar" onAction="#handleCadastro"/>
-    </HBox>
+    <!-- Cabeçalho -->
+    <VBox alignment="CENTER" spacing="10">
+        <!-- <Label text="🌱" style="-fx-font-size: 36;"/> -->
+        <Label text="PlantCare" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2e8b57;"/>
+        <Label text="Sua Horta Inteligente" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
+    </VBox>
 
-    <Label fx:id="lblMensagem" style="-fx-text-fill: red;"/>
+    <!-- Formulário -->
+    <VBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-min-width: 350; -fx-max-width: 750;">
+        
+        <Label text="Acesso ao Sistema" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #333; -fx-padding: 0 0 10 0;"/>
+        
+        <VBox spacing="8">
+            <Label text="Usuário" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
+            <TextField fx:id="txtUsuario" promptText="Digite seu usuário" style="-fx-font-size: 14; -fx-pref-height: 40; -fx-pref-width: 300;"/>
+        </VBox>
+        
+        <VBox spacing="8">
+            <Label text="E-mail" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
+            <TextField fx:id="txtEmail" promptText="Digite seu e-mail" style="-fx-font-size: 14; -fx-pref-height: 40; -fx-pref-width: 300;"/>
+        </VBox>
+        
+        <VBox spacing="8">
+            <Label text="Tipo de Acesso" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
+            <ComboBox fx:id="cbTipoAcesso" promptText="Selecione..." style="-fx-font-size: 14; -fx-pref-height: 40; -fx-pref-width: 300;"/>
+        </VBox>
+        
+        <HBox spacing="15" alignment="CENTER" style="-fx-padding: 15 0 0 0;">
+            <Button text="Entrar" onAction="#handleLogin" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14; -fx-pref-width: 120; -fx-pref-height: 40; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+            <Button text="Cadastrar" onAction="#handleCadastro" style="-fx-background-color: transparent; -fx-text-fill: #4CAF50; -fx-font-size: 14; -fx-pref-width: 120; -fx-pref-height: 40; -fx-border-color: #4CAF50; -fx-border-radius: 5; -fx-font-weight: bold;"/>
+        </HBox>
+        
+        <Label fx:id="lblMensagem" style="-fx-text-fill: #e74c3c; -fx-font-size: 13; -fx-padding: 10 0 0 0; -fx-alignment: CENTER; -fx-wrap-text: true;" maxWidth="300"/>
+    </VBox>
 </VBox>

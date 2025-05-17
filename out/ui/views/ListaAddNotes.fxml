@@ -7,6 +7,26 @@
       spacing="10" style="-fx-padding: 20;">
     
     <Label text="Adicionar Anotações" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Titulo: " GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField promptText="Ex: Problemas com pragas" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        
+        <Label text="Descrição: " GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField promptText="Descrição" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        
+        <Label text="Autor: " GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField promptText="Nome do Autor" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        
+        <Label text="Horta: " GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField promptText="Nome da horta" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <ComboBox promptText="Selecione" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    </GridPane>
+    
+    <!-- <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
+        <Button text="Salvar" onAction="#handleSalvar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox> -->
     
     <!-- TELA DE AADICIONAR ANOTAÇÕES ONDE VOCE PODE ADICIONAR UM TITULO, UMA DESCRICAO, SELECIONAR UMA HORTA E UM AUTOR -->
 </VBox>

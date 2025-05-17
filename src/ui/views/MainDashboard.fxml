@@ -3,31 +3,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
             fx:controller="ui.controllers.MainDashboardController" stylesheets="@styles.css">
 
     <left>
-        <VBox spacing="10" style="-fx-padding: 20; -fx-background-color:rgb(135, 136, 138);">
-            <Label text="PlantCare" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+        <VBox spacing="15" style="-fx-padding: 25; -fx-background-color: #3a3a3a; -fx-min-width: 350;">
+            <!-- Título com ícone -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <!-- <Label text="🌱 🍃 🌲 🪹 🪴 🍂 🍀 🌵" style="-fx-font-size: 24;"/> -->
+                <Label text="PlantCare" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            </HBox>
             
-            <Button text="Listar Hortas" onAction="#showHortasList" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
-            <Button text="Adicionar Horta" onAction="#showNewHorta" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
-            <!-- <Button text="Editar Horta" onAction="#showEditHorta" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/> -->
-            <Button text="Adicionar Anotações" onAction="#showAddNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
-            <Button text="Ler Anotações" onAction="#showNotes" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
-            <Button text="Colheita" onAction="#showColheita" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
-            <Button text="Previsão do tempo" onAction="#showPrevisaotempo" style="-fx-background-color:rgb(63, 184, 39); -fx-text-fill: white; -fx-min-width: 150;"/>
+            <Separator style="-fx-background-color: #5a5a5a; -fx-padding: 5 0 10 0;"/>
             
-            <Separator/>
-            <Button text="Sair" onAction="#handleLogout" style="-fx-min-width: 150;"/>
+            <!-- Botões do menu -->
+            <VBox spacing="12" style="-fx-padding: 10 0 20 0;">
+                <Button text="Listar Hortas" onAction="#showHortasList" styleClass="menu-button"/>
+                <Button text="Adicionar Horta" onAction="#showNewHorta" styleClass="menu-button"/>
+                <Button text="Adicionar Anotações" onAction="#showAddNotes" styleClass="menu-button"/>
+                <Button text="Ler Anotações" onAction="#showNotes" styleClass="menu-button"/>
+                <Button text="Colheita" onAction="#showColheita" styleClass="menu-button"/>
+                <Button text="Previsão do tempo" onAction="#showPrevisaotempo" styleClass="menu-button"/>
+            </VBox>
+            
+            <Separator style="-fx-background-color: #5a5a5a; -fx-padding: 10 0 15 0;"/>
+            
+            <!-- Botão Sair -->
+            <Button text="Sair" onAction="#handleLogout" styleClass="logout-button"/>
         </VBox>
     </left>
 
     <center>
-        <StackPane fx:id="contentArea" style="fx-background-color:rgb(135, 136, 138);">
+        <StackPane fx:id="contentArea" style="-fx-background-color: #f5f5f5;">
             <!-- Aqui será carregado o conteúdo dinâmico -->
-            <Label text="Selecione uma opção no menu" style="-fx-font-size: 16;"/>
+            <Label text="Selecione uma opção no menu" style="-fx-font-size: 16; -fx-text-fill: #555;"/>
         </StackPane>
     </center>
 </BorderPane>
