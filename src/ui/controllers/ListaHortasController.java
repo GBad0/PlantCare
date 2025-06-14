@@ -10,6 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.Modality;
+
 public class ListaHortasController {
     @FXML private TableView<Horta> tabelaHortas;
     @FXML private TableColumn<Horta, String> colNome;
@@ -78,8 +84,29 @@ public class ListaHortasController {
     private void handleEditar() {
         Horta selecionada = tabelaHortas.getSelectionModel().getSelectedItem();
         if (selecionada != null) {
-            // Implementar lógica de edição aqui
-            mostrarAlerta("Editar", "Editando: " + selecionada.getNome());
+            try {
+                // Carrega a tela de edição
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/views/EditHortas.fxml"));
+                Parent root = loader.load();
+                
+                // Obtém o controller e passa os dados
+                EditarHortaController controller = loader.getController();
+                int indice = tabelaHortas.getItems().indexOf(selecionada);
+                controller.setHorta(selecionada, indice, new ArrayList<>(tabelaHortas.getItems()));
+                
+                // Cria e mostra a janela
+                Stage stage = new Stage();
+                stage.setTitle("Editar Horta");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+                
+                // Atualiza a tabela após edição
+                carregarDados();
+                
+            } catch (IOException e) {
+                mostrarAlerta("Erro", "Não foi possível abrir a tela de edição");
+            }
         } else {
             mostrarAlerta("Aviso", "Selecione uma horta para editar");
         }
