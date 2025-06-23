@@ -4,21 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.effect.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="ui.controllers.AdicionarAnotacaoController"
-      fx:id="rootPane"
+      fx:controller="ui.controllers.EditarAnotacaoController"
       spacing="20" 
       style="-fx-padding: 30; -fx-background-color: linear-gradient(to bottom, #f5f7fa, #e4e8eb);">
 
     <!-- Cabeçalho -->
     <VBox alignment="CENTER" spacing="10">
-        <Label text="📝" style="-fx-font-size: 32;"/>
-        <Label text="Nova Anotação" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
-        <Label text="Adicione uma nova anotação à horta" style="-fx-font-size: 14; -fx-text-fill: #666;"/>
+        <Label text="✏️" style="-fx-font-size: 32;"/>
+        <Label text="Editar Anotação" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
+        <Label text="Modifique os detalhes da anotação" style="-fx-font-size: 14; -fx-text-fill: #666;"/>
         <Separator style="-fx-background-color: #ddd; -fx-padding: 10 0 0 0;"/>
     </VBox>
 
@@ -53,4 +49,4 @@
         <Button text="Salvar" onAction="#handleSalvar" defaultButton="true"
                 style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-pref-width: 120; -fx-pref-height: 40; -fx-background-radius: 5;"/>
     </HBox>
-</VBox>
+</VBox> 

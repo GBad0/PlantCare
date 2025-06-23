@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="ui.controllers.EditarHortaController" 
+      spacing="20" 
+      alignment="TOP_CENTER" 
+      style="-fx-padding: 30; -fx-background-color: #f5f5f5;">
+
+    <Label text="Editar Horta" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
+    
+    <GridPane hgap="15" vgap="15" alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+            <ColumnConstraints halignment="LEFT" minWidth="250"/>
+        </columnConstraints>
+        
+        <Label text="Nome da Horta:" style="-fx-font-size: 14;"/>
+        <TextField fx:id="txtNome" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        
+        <Label text="Tipo de Plantação:" style="-fx-font-size: 14;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbPlantacao" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        
+        <Label text="Quantidade:" style="-fx-font-size: 14;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtQuantidade" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        
+        <Label text="Responsável:" style="-fx-font-size: 14;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtResponsavel" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        
+        <Label text="Data de Plantação:" style="-fx-font-size: 14;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtDataPlantacao" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        
+        <Label text="Localização:" style="-fx-font-size: 14;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtLocalizacao" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="20" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+        <Button text="Cancelar" onAction="#handleCancelar" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120; -fx-pref-height: 40;"/>
+        <Button text="Salvar" onAction="#handleSalvar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120; -fx-pref-height: 40;"/>
+    </HBox>
+</VBox>

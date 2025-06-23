@@ -14,73 +14,105 @@ import java.io.IOException;
 public class MainDashboardController {
     @FXML private StackPane contentArea;
 
+    @FXML
+    private void initialize() {
+        if (contentArea == null) {
+            System.err.println("ERRO: contentArea não foi injetado pelo FXMLLoader");
+        } else {
+            System.out.println("INFO: contentArea foi inicializado com sucesso");
+        }
+    }
+
     // Métodos para trocar as telas
     @FXML
     private void showHortasList() {
-        loadView("ListaHortas.fxml"); // Você precisará criar este arquivo depois
-        //AQUI ADICIONAR A OPÇÃO DE  VISUALIZAR AS HORTAS E AO CLICAR EM ALGUMA EXIBIRA AS SUAS INFORMAÇÕES PLANTAÇÕES
-
+        loadView("ListaHortas.fxml");
     }
 
     @FXML
     private void showEditHorta() {
-        loadView("EditHortas.fxml"); // Você precisará criar este arquivo depois
-        // EXIBIR "AS HORTAS" E UM BOTAO DE EDITAR/EXCLUIR E AO CLICAR NO EDITAR ELE ABRE PAGINA DE EDITAR A HORTA
-        // Q TERA OS CAMPOS EDITAVEIS DA ORTA INCLINDO PLANTACAO 
-
-        //EDITAR/DELETAR AS HORTAS EXISTENTES (INCLUINDO PLANDACAO(NOME,QUIANTIDADE))
+        loadView("EditHortas.fxml");
     }
 
     @FXML
     private void showNewHorta() {
         loadView("NewHortas.fxml");
-       
     }
 
     @FXML
     private void showAddNotes() {
-        loadView("ListaAddNotes.fxml"); // Você precisará criar este arquivo depois
+        loadView("ListaAddNotes.fxml");
     }
 
     @FXML
     private void showNotes() {
-        loadView("ListaNotes.fxml"); // Você precisará criar este arquivo depois
+        loadView("ListaNotes.fxml");
     }
 
     @FXML
     private void showColheita() {
-        loadView("Colheita.fxml"); // Você precisará criar este arquivo depois
+        loadView("Colheita.fxml");
     }
 
     @FXML
     private void showPrevisaotempo() {
-        loadView("PrevisaoTempo.fxml"); // Você precisará criar este arquivo depois
+        loadView("PrevisaoTempo.fxml");
     }
-
 
     @FXML
     private void handleLogout() {
         try {
             Parent loginView = FXMLLoader.load(getClass().getResource("/ui/views/Login.fxml"));
-            contentArea.getScene().setRoot(loginView);
-            
+            Scene scene = contentArea.getScene();
+            if (scene != null) {
+                scene.setRoot(loginView);
+            } else {
+                showAlert("Erro", "Scene não encontrada");
+            }
         } catch (IOException e) {
+            showAlert("Erro", "Não foi possível fazer logout: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void loadView(String fxmlFile) {
+        if (contentArea == null) {
+            System.err.println("ERRO: contentArea é null ao tentar carregar " + fxmlFile);
+            showAlert("Erro", "contentArea não foi inicializado corretamente");
+            return;
+        }
+
         try {
-            Parent view = FXMLLoader.load(getClass().getResource("/ui/views/" + fxmlFile));
+            System.out.println("INFO: Tentando carregar " + fxmlFile);
+            String resourcePath = "/ui/views/" + fxmlFile;
+            System.out.println("INFO: Caminho do recurso: " + resourcePath);
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourcePath));
+            if (loader.getLocation() == null) {
+                System.err.println("ERRO: Não foi possível encontrar o arquivo " + resourcePath);
+                showAlert("Erro", "Arquivo não encontrado: " + fxmlFile);
+                return;
+            }
+
+            Parent view = loader.load();
+            System.out.println("INFO: View carregada com sucesso");
             contentArea.getChildren().setAll(view);
+            System.out.println("INFO: View adicionada ao contentArea");
+            
         } catch (IOException e) {
-            showAlert("Erro", "Não foi possível carregar a view: " + fxmlFile);
+            System.err.println("ERRO ao carregar " + fxmlFile + ": " + e.getMessage());
             e.printStackTrace();
+            showAlert("Erro", "Não foi possível carregar a view " + fxmlFile + ": " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("ERRO inesperado ao carregar " + fxmlFile + ": " + e.getMessage());
+            e.printStackTrace();
+            showAlert("Erro", "Erro inesperado ao carregar a view " + fxmlFile + ": " + e.getMessage());
         }
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        System.err.println("ALERTA: " + title + " - " + message);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

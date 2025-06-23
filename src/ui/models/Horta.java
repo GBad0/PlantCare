@@ -1,4 +1,4 @@
-package ui.controllers;
+package ui.models;
 
 public class Horta {
     private String nome;
