@@ -2,11 +2,66 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
-      spacing="10" style="-fx-padding: 20;">
+      fx:controller="ui.controllers.PrevisaoTempoController"
+      spacing="20" style="-fx-padding: 30; -fx-background-color: #f5f5f5;">
     
-    <Label text="Previsao do Tempo" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    <!-- Cabeçalho -->
+    <VBox alignment="CENTER" spacing="10">
+        <Label text="🌤️ Previsão do Tempo" 
+               style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        <Label text="Consulte a previsão do tempo para planejar suas atividades agrícolas" 
+               style="-fx-font-size: 14; -fx-text-fill: #7f8c8d;"/>
+    </VBox>
     
-    <!-- TELA COM PREVISAO DO TEMPO UTILIZANBDO API -->
+    <!-- Área de busca -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
+        <Label text="Buscar cidade:" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="cityInput" 
+                      promptText="Digite o nome da cidade (ex: São Paulo, Rio de Janeiro)"
+                      style="-fx-font-size: 14; -fx-pref-width: 400;"
+                      onAction="#handleEnterKey"/>
+            <Button fx:id="searchButton" 
+                    text="🔍 Buscar" 
+                    onAction="#searchWeather"
+                    style="-fx-font-size: 14; -fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+        
+        <Label fx:id="statusLabel" 
+               text="Digite o nome de uma cidade para ver a previsão do tempo"
+               style="-fx-font-size: 12; -fx-text-fill: #7f8c8d;"/>
+    </VBox>
+    
+    <!-- Indicador de carregamento -->
+    <VBox fx:id="loadingContainer" alignment="CENTER" spacing="10" visible="false">
+        <ProgressIndicator fx:id="loadingIndicator" style="-fx-scale-x: 1.5; -fx-scale-y: 1.5;"/>
+        <Label text="Buscando dados do tempo..." style="-fx-font-size: 14; -fx-text-fill: #7f8c8d;"/>
+    </VBox>
+    
+    <!-- Container para exibir os dados do tempo -->
+    <VBox fx:id="weatherContainer" alignment="CENTER" spacing="20">
+        <!-- Os dados do tempo serão inseridos aqui dinamicamente -->
+    </VBox>
+    
+    <!-- Dicas para agricultura -->
+    <VBox spacing="10" style="-fx-background-color: #e8f5e8; -fx-background-radius: 10; -fx-padding: 20;">
+        <Label text="💡 Dicas para Agricultura" 
+               style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+        <VBox spacing="5">
+            <Label text="• Temperatura ideal para plantio: 15°C - 30°C" 
+                   style="-fx-font-size: 12; -fx-text-fill: #2c3e50;"/>
+            <Label text="• Umidade alta (acima de 70%) favorece o crescimento" 
+                   style="-fx-font-size: 12; -fx-text-fill: #2c3e50;"/>
+            <Label text="• Ventos fortes podem danificar plantas jovens" 
+                   style="-fx-font-size: 12; -fx-text-fill: #2c3e50;"/>
+            <Label text="• Evite regar em dias muito úmidos" 
+                   style="-fx-font-size: 12; -fx-text-fill: #2c3e50;"/>
+        </VBox>
+    </VBox>
+    
 </VBox>

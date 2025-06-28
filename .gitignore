@@ -1,0 +1,25 @@
+# Ignora o arquivo .env (variáveis de ambiente)
+.env
+
+# Ignora arquivos compilados
+*.class
+
+# Ignora diretórios de build comuns
+/bin/
+/build/
+/target/
+
+# Ignora configurações de IDEs comuns
+*.iml
+.idea/
+*.ipr
+*.iws
+*.log
+.vscode/
+
+# Ignora arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Ignora bibliotecas externas baixadas (opcional)
+lib/
