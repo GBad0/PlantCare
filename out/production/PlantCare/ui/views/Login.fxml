@@ -4,45 +4,53 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="ui.controllers.LoginController" 
-      spacing="20" 
-      alignment="CENTER" 
-      style="-fx-padding: 40; -fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ui.controllers.LoginController"
+      alignment="CENTER"
+      spacing="30"
+      stylesheets="@styles.css"
+      style="-fx-background-color: -fx-sidebar-bg; -fx-padding: 0;">
 
-    <!-- Cabeçalho -->
-    <VBox alignment="CENTER" spacing="10">
-        <!-- <Label text="🌱" style="-fx-font-size: 36;"/> -->
-        <Label text="PlantCare" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #2e8b57;"/>
-        <Label text="Sua Horta Inteligente" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
+    <!-- Logo e título -->
+    <VBox alignment="CENTER" spacing="10" styleClass="logo-container">
+        <SVGPath content="M12,1.25c-0.47,0-0.85,0.38-0.85,0.85v1.62C7.71,4.14,5,7.15,5,10.75c0,3.9,3.18,7.08,7.08,7.08s7.08-3.18,7.08-7.08c0-3.6-2.71-6.61-6.15-7.03V2.1c0-0.47-0.38-0.85-0.85-0.85z M12,5.25c3.03,0,5.5,2.47,5.5,5.5s-2.47,5.5-5.5,5.5s-5.5-2.47-5.5-5.5S8.97,5.25,12,5.25z"
+                 styleClass="logo-icon"/>
+        <Label text="PlantCare" styleClass="app-title"/>
+        <Label text="Sua Horta Inteligente" styleClass="app-subtitle"/>
     </VBox>
 
-    <!-- Formulário -->
-    <VBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-min-width: 350; -fx-max-width: 750;">
-        
-        <Label text="Acesso ao Sistema" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #333; -fx-padding: 0 0 10 0;"/>
-        
-        <VBox spacing="8">
-            <Label text="Usuário" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
-            <TextField fx:id="txtUsuario" promptText="Digite seu usuário" style="-fx-font-size: 14; -fx-pref-height: 40; -fx-pref-width: 300;"/>
+    <!-- Card de login -->
+    <VBox alignment="CENTER" spacing="20" maxWidth="400" styleClass="card">
+        <Label text="Acesso ao Sistema" styleClass="title-label"/>
+
+        <VBox spacing="8" alignment="CENTER" maxWidth="300">
+            <HBox alignment="CENTER_LEFT" maxWidth="300">
+                <Label text="Usuário" style="-fx-text-fill: -fx-dark-gray;"/>
+            </HBox>
+            <TextField fx:id="txtUsuario" promptText="Digite seu usuário" styleClass="text-field" maxWidth="300"/>
         </VBox>
-        
-        <VBox spacing="8">
-            <Label text="E-mail" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
-            <TextField fx:id="txtEmail" promptText="Digite seu e-mail" style="-fx-font-size: 14; -fx-pref-height: 40; -fx-pref-width: 300;"/>
+
+        <VBox spacing="8" alignment="CENTER" maxWidth="300">
+            <HBox alignment="CENTER_LEFT" maxWidth="300">
+                <Label text="E-mail" style="-fx-text-fill: -fx-dark-gray;"/>
+            </HBox>
+            <TextField fx:id="txtEmail" promptText="Digite seu e-mail" styleClass="text-field" maxWidth="300"/>
         </VBox>
-        
-        <VBox spacing="8">
-            <Label text="Tipo de Acesso" style="-fx-font-size: 14; -fx-text-fill: #555;"/>
-            <ComboBox fx:id="cbTipoAcesso" promptText="Selecione..." style="-fx-font-size: 14; -fx-pref-height: 40; -fx-pref-width: 300;"/>
+
+        <VBox spacing="8" alignment="CENTER" maxWidth="300">
+            <HBox alignment="CENTER_LEFT" maxWidth="300">
+                <Label text="Tipo de Acesso" style="-fx-text-fill: -fx-dark-gray;"/>
+            </HBox>
+            <ComboBox fx:id="cbTipoAcesso" promptText="Selecione..." styleClass="combo-box" maxWidth="300"/>
         </VBox>
-        
-        <HBox spacing="15" alignment="CENTER" style="-fx-padding: 15 0 0 0;">
-            <Button text="Entrar" onAction="#handleLogin" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14; -fx-pref-width: 120; -fx-pref-height: 40; -fx-font-weight: bold; -fx-background-radius: 5;"/>
-            <Button text="Cadastrar" onAction="#handleCadastro" style="-fx-background-color: transparent; -fx-text-fill: #4CAF50; -fx-font-size: 14; -fx-pref-width: 120; -fx-pref-height: 40; -fx-border-color: #4CAF50; -fx-border-radius: 5; -fx-font-weight: bold;"/>
+
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Entrar" onAction="#handleLogin" styleClass="button" maxWidth="120" minWidth="120" minHeight="40"/>
+            <Button text="Cadastrar" onAction="#handleCadastro" styleClass="button" maxWidth="120" minWidth="120" minHeight="40"/>
         </HBox>
-        
+
         <Label fx:id="lblMensagem" style="-fx-text-fill: #e74c3c; -fx-font-size: 13; -fx-padding: 10 0 0 0; -fx-alignment: CENTER; -fx-wrap-text: true;" maxWidth="300"/>
     </VBox>
 </VBox>

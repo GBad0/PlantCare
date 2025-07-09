@@ -18,17 +18,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class WeatherService {
-    // ⚠️ IMPORTANTE: Substitua pela sua chave válida da OpenWeatherMap
-    // Obtenha em: https://openweathermap.org/api
-    private static final String API_KEY = System.getenv("WEATHER_API_KEY");
+    private static final String API_KEY = "a23dbe7a693a2e745fb7b4233beeb1a4";
     private static final String CURRENT_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
     private static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast";
     
     public WeatherData getWeatherData(String cityName) throws IOException, JSONException {
-        // Buscar dados atuais
         WeatherData currentWeather = getCurrentWeather(cityName);
-        
-        // Buscar previsão de 5 dias
+
         List<DailyForecast> forecasts = getForecastData(cityName);
         currentWeather.setDailyForecasts(forecasts);
         
@@ -120,13 +116,11 @@ public class WeatherService {
         List<DailyForecast> forecasts = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-        
-        // Agrupar dados por dia (próximos 3 dias)
+
         for (int i = 1; i <= 3; i++) {
             LocalDate forecastDate = currentDate.plusDays(i);
             String dateStr = forecastDate.format(formatter);
-            
-            // Encontrar dados para este dia (usar dados do meio-dia se disponível)
+
             double maxTemp = -100, minTemp = 100;
             String description = "";
             String icon = "";
@@ -137,8 +131,7 @@ public class WeatherService {
             for (int j = 0; j < list.length(); j++) {
                 JSONObject item = list.getJSONObject(j);
                 String dtTxt = item.getString("dt_txt");
-                
-                // Verificar se é o dia correto
+
                 if (dtTxt.startsWith(forecastDate.toString())) {
                     JSONObject main = item.getJSONObject("main");
                     double temp = main.getDouble("temp");

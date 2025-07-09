@@ -14,7 +14,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Carrega o FXML usando o classloader
             URL fxmlUrl = getClass().getResource("/ui/views/Login.fxml");
             if (fxmlUrl == null) {
                 throw new IOException("Arquivo FXML não encontrado!");
