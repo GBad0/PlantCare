@@ -25,6 +25,7 @@ public class ListaHortasController {
     @FXML private TableColumn<Horta, String> colResponsavel;
     @FXML private TableColumn<Horta, String> colData;
     @FXML private TableColumn<Horta, String> colLocalizacao;
+    @FXML private TableColumn<Horta, String> colDataLimite;
     
     @FXML private TextField txtPesquisa;
     @FXML private ComboBox<String> cbFiltroPlantacao;
@@ -47,6 +48,7 @@ public class ListaHortasController {
         colResponsavel.setCellValueFactory(new PropertyValueFactory<>("responsavel"));
         colData.setCellValueFactory(new PropertyValueFactory<>("dataPlantacao"));
         colLocalizacao.setCellValueFactory(new PropertyValueFactory<>("localizacao"));
+        colDataLimite.setCellValueFactory(new PropertyValueFactory<>("dataLimiteColheita"));
     }
 
     private void configurarFiltros() {
@@ -115,13 +117,15 @@ public class ListaHortasController {
                 }
                 
                 if (valores.length >= 6) {
+                    String dataLimiteColheita = valores.length >= 7 ? valores[6] : "";
                     Horta horta = new Horta(
                         valores[0], 
                         valores[1],
                         Integer.parseInt(valores[2]),
                         valores[3],
                         valores[4],
-                        valores[5]
+                        valores[5],
+                        dataLimiteColheita
                     );
                     listaHortas.add(horta);
                 }

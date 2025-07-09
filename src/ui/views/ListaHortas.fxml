@@ -47,12 +47,13 @@
                 <URL value="@styles.css"/>
             </stylesheets>
             <columns>
-                <TableColumn fx:id="colNome" text="Nome" prefWidth="200" style="-fx-font-size: 14; -fx-alignment: CENTER_LEFT;"/>
-                <TableColumn fx:id="colPlantacao" text="Tipo de Plantação" prefWidth="150" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
-                <TableColumn fx:id="colQuantidade" text="Sementes" prefWidth="100" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
-                <TableColumn fx:id="colResponsavel" text="Responsável" prefWidth="150" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
-                <TableColumn fx:id="colData" text="Data de Plantação" prefWidth="150" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
-                <TableColumn fx:id="colLocalizacao" text="Localização" prefWidth="150" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+                <TableColumn fx:id="colNome" text="Nome" prefWidth="180" style="-fx-font-size: 14; -fx-alignment: CENTER_LEFT;"/>
+                <TableColumn fx:id="colPlantacao" text="Tipo de Plantação" prefWidth="130" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+                <TableColumn fx:id="colQuantidade" text="Sementes" prefWidth="80" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+                <TableColumn fx:id="colResponsavel" text="Responsável" prefWidth="130" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+                <TableColumn fx:id="colData" text="Data de Plantação" prefWidth="120" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+                <TableColumn fx:id="colLocalizacao" text="Localização" prefWidth="120" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
+                <TableColumn fx:id="colDataLimite" text="Data Limite" prefWidth="120" style="-fx-font-size: 14; -fx-alignment: CENTER;"/>
             </columns>
             <placeholder>
                 <Label text="Nenhuma horta cadastrada" style="-fx-text-fill: #666;"/>

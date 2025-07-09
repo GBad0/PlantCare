@@ -46,6 +46,12 @@
                     style="-fx-pref-height: 35; -fx-font-size: 14;"/>
     </VBox>
 
+    <!-- Indicador de Progresso -->
+    <VBox fx:id="progressContainer" alignment="CENTER" spacing="10" visible="false">
+        <ProgressIndicator fx:id="progressIndicator" style="-fx-pref-width: 50; -fx-pref-height: 50;"/>
+        <Label fx:id="progressLabel" text="Enviando notificação por email..." style="-fx-font-size: 14; -fx-text-fill: #666;"/>
+    </VBox>
+
     <!-- Botões -->
     <HBox spacing="10" alignment="CENTER_RIGHT">
         <Button text="Cancelar" onAction="#handleCancelar" 

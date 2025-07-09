@@ -16,6 +16,7 @@ public class EditarHortaController {
     @FXML private TextField txtResponsavel;
     @FXML private TextField txtDataPlantacao;
     @FXML private TextField txtLocalizacao;
+    @FXML private TextField txtDataLimiteColheita;
     
     private Horta horta;
     private String arquivoCSV = "data/hortas.csv";
@@ -35,6 +36,7 @@ public class EditarHortaController {
         txtResponsavel.setText(horta.getResponsavel());
         txtDataPlantacao.setText(horta.getDataPlantacao());
         txtLocalizacao.setText(horta.getLocalizacao());
+        txtDataLimiteColheita.setText(horta.getDataLimiteColheita());
     }
 
     @FXML
@@ -47,12 +49,16 @@ public class EditarHortaController {
             horta.setResponsavel(txtResponsavel.getText());
             horta.setDataPlantacao(txtDataPlantacao.getText());
             horta.setLocalizacao(txtLocalizacao.getText());
+            horta.setDataLimiteColheita(txtDataLimiteColheita.getText());
             
             // Atualiza a lista
             todasHortas.set(indiceHorta, horta);
             
             // Salva no CSV
             salvarNoCSV(todasHortas);
+            
+            // Limpar campos após salvar com sucesso
+            limparCampos();
             
             // Fecha a janela
             Stage stage = (Stage) txtNome.getScene().getWindow();
@@ -66,18 +72,19 @@ public class EditarHortaController {
     private void salvarNoCSV(List<Horta> hortas) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoCSV))) {
             // Escreve o cabeçalho
-            writer.write("Nome,Tipo_Plantação,Quantidade,Responsável,Data_Plantação,Localização");
+            writer.write("Nome,Tipo_Plantação,Quantidade,Responsável,Data_Plantação,Localização,Data_Limite_Colheita");
             writer.newLine();
             
             // Escreve cada horta
             for (Horta h : hortas) {
-                writer.write(String.format("\"%s\",\"%s\",%d,\"%s\",%s,\"%s\"",
+                writer.write(String.format("\"%s\",\"%s\",%d,\"%s\",%s,\"%s\",\"%s\"",
                         h.getNome(),
                         h.getPlantacao(),
                         h.getQuantidade(),
                         h.getResponsavel(),
                         h.getDataPlantacao(),
-                        h.getLocalizacao()));
+                        h.getLocalizacao(),
+                        h.getDataLimiteColheita()));
                 writer.newLine();
             }
             
@@ -90,6 +97,19 @@ public class EditarHortaController {
     private void handleCancelar() {
         Stage stage = (Stage) txtNome.getScene().getWindow();
         stage.close();
+    }
+
+    private void limparCampos() {
+        txtNome.clear();
+        cbPlantacao.getSelectionModel().clearSelection();
+        txtQuantidade.clear();
+        txtResponsavel.clear();
+        txtDataPlantacao.clear();
+        txtLocalizacao.clear();
+        txtDataLimiteColheita.clear();
+        
+        // Focar no primeiro campo para facilitar nova entrada
+        txtNome.requestFocus();
     }
 
     private void mostrarAlerta(String titulo, String mensagem) {

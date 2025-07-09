@@ -36,6 +36,9 @@
         
         <Label text="Localização:" style="-fx-font-size: 14;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
         <TextField fx:id="txtLocalizacao" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        
+        <Label text="Data Limite de Colheita:" style="-fx-font-size: 14;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtDataLimiteColheita" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="20" alignment="CENTER" style="-fx-padding: 20 0 0 0;">

@@ -9,6 +9,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.concurrent.Task;
+import ui.services.DataLimiteService;
 
 import java.io.IOException;
 
@@ -35,6 +37,13 @@ public class MainDashboardController {
         if (btnAdicionarHorta != null && "Ajudante".equalsIgnoreCase(tipoAcessoUsuario)) {
             btnAdicionarHorta.setVisible(false);
         }
+        
+        // Teste simples para verificar se o sistema está funcionando
+        System.out.println("=== TESTE SIMPLES DO SISTEMA ===");
+        System.out.println("Data atual do sistema: " + java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        
+        // Verificar data limite de colheita em background
+        verificarDataLimiteEmBackground();
     }
 
     // Métodos para trocar as telas
@@ -122,6 +131,32 @@ public class MainDashboardController {
             e.printStackTrace();
             showAlert("Erro", "Erro inesperado ao carregar a view " + fxmlFile + ": " + e.getMessage());
         }
+    }
+
+    private void verificarDataLimiteEmBackground() {
+        System.out.println("Iniciando verificação de data limite...");
+        
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                System.out.println("Executando verificação em background...");
+                // Aguarda um pouco para não interferir no carregamento da interface
+                Thread.sleep(1000);
+                DataLimiteService.verificarDataLimite();
+                return null;
+            }
+        };
+        
+        task.setOnSucceeded(e -> {
+            System.out.println("Verificação de data limite concluída com sucesso");
+        });
+        
+        task.setOnFailed(e -> {
+            System.err.println("Erro na verificação de data limite: " + task.getException().getMessage());
+            task.getException().printStackTrace();
+        });
+        
+        new Thread(task).start();
     }
 
     private void showAlert(String title, String message) {

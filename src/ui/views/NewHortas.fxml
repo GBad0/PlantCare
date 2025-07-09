@@ -47,7 +47,7 @@
         
         <!-- Linha 3 - Responsável -->
         <Label text="Responsável:" style="-fx-font-size: 14; -fx-text-fill: #555;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtResponsavel" promptText="Nome do responsável" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <ComboBox fx:id="cbResponsavel" promptText="Selecione o responsável" style="-fx-font-size: 14; -fx-pref-height: 35; -fx-pref-width: 300;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
         
         <!-- Linha 4 - Data -->
         <Label text="Data de Plantação:" style="-fx-font-size: 14; -fx-text-fill: #555;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
@@ -56,6 +56,10 @@
         <!-- Linha 5 - Localização -->
         <Label text="Localização:" style="-fx-font-size: 14; -fx-text-fill: #555;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
         <TextField fx:id="txtLocalizacao" promptText="Ex: Setor 3, Canteiro B" style="-fx-font-size: 14; -fx-pref-height: 35;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        
+        <!-- Linha 6 - Data Limite de Colheita -->
+        <Label text="Data Limite de Colheita:" style="-fx-font-size: 14; -fx-text-fill: #555;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpDataLimiteColheita" style="-fx-font-size: 14; -fx-pref-height: 35; -fx-pref-width: 300;" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
     </GridPane>
 
     <!-- Rodapé com botões -->

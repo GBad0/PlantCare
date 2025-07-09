@@ -7,15 +7,17 @@ public class Horta {
     private String responsavel;
     private String dataPlantacao;
     private String localizacao;
+    private String dataLimiteColheita;
 
     public Horta(String nome, String plantacao, int quantidade, 
-                 String responsavel, String dataPlantacao, String localizacao) {
+                 String responsavel, String dataPlantacao, String localizacao, String dataLimiteColheita) {
         this.nome = nome;
         this.plantacao = plantacao;
         this.quantidade = quantidade;
         this.responsavel = responsavel;
         this.dataPlantacao = dataPlantacao;
         this.localizacao = localizacao;
+        this.dataLimiteColheita = dataLimiteColheita;
     }
 
     // Getters e Setters (necessários para o TableView)
@@ -36,4 +38,7 @@ public class Horta {
     
     public String getLocalizacao() { return localizacao; }
     public void setLocalizacao(String localizacao) { this.localizacao = localizacao; }
+    
+    public String getDataLimiteColheita() { return dataLimiteColheita; }
+    public void setDataLimiteColheita(String dataLimiteColheita) { this.dataLimiteColheita = dataLimiteColheita; }
 }

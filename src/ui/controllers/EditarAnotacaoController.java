@@ -92,6 +92,7 @@ public class EditarAnotacaoController {
                 
                 Files.write(Paths.get(ARQUIVO_CSV), novasLinhas);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Anotação atualizada com sucesso!");
+                limparCampos();
                 fecharJanela();
                 
             } catch (IOException e) {
@@ -142,6 +143,17 @@ public class EditarAnotacaoController {
     @FXML
     private void handleCancelar() {
         fecharJanela();
+    }
+
+    private void limparCampos() {
+        txtTitulo.clear();
+        txtDescricao.clear();
+        cbHorta.getSelectionModel().clearSelection();
+        txtAutor.clear();
+        datePicker.setValue(LocalDate.now());
+        
+        // Focar no primeiro campo para facilitar nova entrada
+        txtTitulo.requestFocus();
     }
 
     private void fecharJanela() {

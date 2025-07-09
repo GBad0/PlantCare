@@ -42,6 +42,7 @@ public class LoginController {
             return;
         }
         if (authenticate(usuario, email, tipoAcesso)) {
+            limparCampos();
             successLogin();
         } else {
             lblMensagem.setText("Usuário ou dados inválidos!");
@@ -83,6 +84,7 @@ public class LoginController {
         }
         if (registerUser(usuario, email, tipoAcesso)) {
             lblMensagem.setText("Usuário cadastrado com sucesso!");
+            limparCampos();
         } else {
             lblMensagem.setText("Usuário já existe!");
         }
@@ -140,6 +142,16 @@ public class LoginController {
     private boolean isEmailValido(String email) {
         // Regex simples para validar e-mail
         return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    }
+
+    private void limparCampos() {
+        txtUsuario.clear();
+        txtEmail.clear();
+        cbTipoAcesso.getSelectionModel().clearSelection();
+        lblMensagem.setText("");
+        
+        // Focar no primeiro campo para facilitar nova entrada
+        txtUsuario.requestFocus();
     }
 
     private void showError(String message) {
