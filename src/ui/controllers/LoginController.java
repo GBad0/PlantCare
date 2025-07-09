@@ -1,6 +1,11 @@
 package ui.controllers;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Objects;
 import java.io.IOException;
 import java.net.URL;
 
@@ -32,20 +37,14 @@ public class LoginController {
         String usuario = txtUsuario.getText();
         String email = txtEmail.getText();
         String tipoAcesso = cbTipoAcesso.getValue();
-        
         if (usuario.isEmpty() || email.isEmpty() || tipoAcesso == null) {
             lblMensagem.setText("Preencha todos os campos!");
+            return;
+        }
+        if (authenticate(usuario, email, tipoAcesso)) {
+            successLogin();
         } else {
-            lblMensagem.setText(String.format(
-                "Usuário: %s | Email: %s | Tipo: %s", 
-                usuario, email, tipoAcesso
-            ));
-            // Aqui você pode adicionar a lógica de autenticação
-            // if (authenticate(usuario, email, tipoAcesso)) {           
-                successLogin();
-            // } else {
-            //     lblMensagem.setText("Credenciais inválidas!");
-            // }
+            lblMensagem.setText("Usuário ou dados inválidos!");
         }
     }
 
@@ -68,15 +67,68 @@ public class LoginController {
 
     @FXML
     private void handleCadastro() {
-        lblMensagem.setText("Redirecionando para cadastro...");
-        // Implemente a navegação para a tela de cadastro depois
+        String usuario = txtUsuario.getText();
+        String email = txtEmail.getText();
+        String tipoAcesso = cbTipoAcesso.getValue();
+        if (usuario.isEmpty() || email.isEmpty() || tipoAcesso == null) {
+            lblMensagem.setText("Preencha todos os campos!");
+            return;
+        }
+        if (registerUser(usuario, email, tipoAcesso)) {
+            lblMensagem.setText("Usuário cadastrado com sucesso!");
+        } else {
+            lblMensagem.setText("Usuário já existe!");
+        }
     }
 
-    /*private boolean authenticate(String usuario, String email, String tipoAcesso) {
-        // Aqui você implementaria a lógica real de autenticação
-        // Por enquanto, apenas simulação
-        return true;
-    } */
+    private boolean authenticate(String usuario, String email, String tipoAcesso) {
+        File file = new File("data/usuarios.csv");
+        if (!file.exists()) return false;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3 &&
+                    Objects.equals(parts[0], usuario) &&
+                    Objects.equals(parts[1], email) &&
+                    Objects.equals(parts[2], tipoAcesso)) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            lblMensagem.setText("Erro ao ler usuários: " + e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean registerUser(String usuario, String email, String tipoAcesso) {
+        File file = new File("data/usuarios.csv");
+        // Verifica se já existe
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length == 3 &&
+                        Objects.equals(parts[0], usuario) &&
+                        Objects.equals(parts[1], email)) {
+                        return false; // Já existe
+                    }
+                }
+            } catch (Exception e) {
+                lblMensagem.setText("Erro ao ler usuários: " + e.getMessage());
+                return false;
+            }
+        }
+        // Adiciona novo usuário
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
+            bw.write(usuario + "," + email + "," + tipoAcesso + "\n");
+            return true;
+        } catch (Exception e) {
+            lblMensagem.setText("Erro ao salvar usuário: " + e.getMessage());
+            return false;
+        }
+    }
 
     private void showError(String message) {
         lblMensagem.setText(message);
