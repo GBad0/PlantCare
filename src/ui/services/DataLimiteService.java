@@ -98,6 +98,7 @@ public class DataLimiteService {
             }
         } catch (Exception e) {
             System.err.println("Erro ao processar data limite da horta " + horta.getNome() + ": " + e.getMessage());
+            System.err.println("Data limite original: '" + horta.getDataLimiteColheita() + "'");
             e.printStackTrace();
         }
         
@@ -135,12 +136,22 @@ public class DataLimiteService {
         try {
             String emailResponsavel = horta.getResponsavel();
             
+            System.out.println("=== ENVIANDO NOTIFICAÇÃO DE DATA LIMITE ===");
+            System.out.println("Horta: " + horta.getNome());
+            System.out.println("Email responsável: " + emailResponsavel);
+            System.out.println("Data limite: " + horta.getDataLimiteColheita());
+            
             if (emailResponsavel != null && !emailResponsavel.isEmpty()) {
+                System.out.println("Chamando EmailService.sendDataLimiteEmail...");
                 EmailService.sendDataLimiteEmail(emailResponsavel, horta);
                 System.out.println("Notificação de data limite enviada para: " + emailResponsavel);
+            } else {
+                System.err.println("ERRO: Email do responsável está vazio ou null");
+                System.err.println("Email responsável: '" + emailResponsavel + "'");
             }
         } catch (Exception e) {
             System.err.println("Erro ao enviar notificação de data limite: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

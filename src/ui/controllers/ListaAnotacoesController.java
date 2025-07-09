@@ -90,6 +90,22 @@ public class ListaAnotacoesController {
         Set<String> hortas = new HashSet<>();
         hortas.add("Todas");
         
+        // Verificar se o arquivo de hortas existe
+        File arquivoHortas = new File(ARQUIVO_HORTAS);
+        if (!arquivoHortas.exists()) {
+            try {
+                // Criar diretório se não existir
+                arquivoHortas.getParentFile().mkdirs();
+                
+                // Criar arquivo com cabeçalho básico
+                try (PrintWriter writer = new PrintWriter(new FileWriter(ARQUIVO_HORTAS))) {
+                    writer.println("Nome,Localização,Data de Criação");
+                }
+            } catch (IOException e) {
+                // Se não conseguir criar, apenas continuar com a lista vazia
+            }
+        }
+        
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_HORTAS))) {
             br.readLine(); // Pular cabeçalho
             String linha;
@@ -100,7 +116,8 @@ public class ListaAnotacoesController {
                 }
             }
         } catch (IOException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível carregar as hortas: " + e.getMessage());
+            // Se não conseguir ler o arquivo, apenas continuar com a lista vazia
+            // Não mostrar erro para não interromper a funcionalidade
         }
         
         cbFiltroHorta.getItems().addAll(hortas);
@@ -114,8 +131,33 @@ public class ListaAnotacoesController {
 
     private void carregarDados() {
         listaAnotacoes.clear();
+        
+        // Verificar se o arquivo existe, se não, criar com cabeçalho
+        File arquivoAnotacoes = new File(ARQUIVO_CSV);
+        if (!arquivoAnotacoes.exists()) {
+            try {
+                // Criar diretório se não existir
+                arquivoAnotacoes.getParentFile().mkdirs();
+                
+                // Criar arquivo com cabeçalho
+                try (PrintWriter writer = new PrintWriter(new FileWriter(ARQUIVO_CSV))) {
+                    writer.println("Título,Descrição,Horta,Autor,Data");
+                }
+            } catch (IOException e) {
+                mostrarAlerta(Alert.AlertType.WARNING, "Aviso", "Não foi possível criar o arquivo de anotações. A lista estará vazia.");
+                return;
+            }
+        }
+        
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_CSV))) {
-            br.readLine(); // Pular cabeçalho
+            String primeiraLinha = br.readLine();
+            if (primeiraLinha == null) {
+                // Arquivo vazio, adicionar cabeçalho
+                try (PrintWriter writer = new PrintWriter(new FileWriter(ARQUIVO_CSV))) {
+                    writer.println("Título,Descrição,Horta,Autor,Data");
+                }
+                return;
+            }
             
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -138,7 +180,7 @@ public class ListaAnotacoesController {
                 }
             }
         } catch (IOException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível carregar os dados: " + e.getMessage());
+            mostrarAlerta(Alert.AlertType.WARNING, "Aviso", "Não foi possível carregar os dados: " + e.getMessage() + "\nA lista estará vazia.");
         }
     }
 

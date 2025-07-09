@@ -1,4 +1,4 @@
-<#
+ <#
 .SYNOPSIS
     Script de configuracao automatica para projetos JavaFX com todas as dependencias
 .DESCRIPTION

@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.concurrent.Task;
 import ui.services.DataLimiteService;
+import ui.models.Horta;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -168,11 +169,36 @@ public class NovaHortaController {
             if (dataLimite.equals(dataHoje)) {
                 System.out.println("Data limite é hoje! Enviando notificação...");
                 
-                // Executar verificação em background
+                // Criar a horta para verificação
+                String responsavelCombo = cbResponsavel.getValue();
+                String responsavelEmail = responsavelCombo;
+                if (responsavelCombo != null && responsavelCombo.contains("(") && responsavelCombo.contains(")")) {
+                    responsavelEmail = responsavelCombo.substring(responsavelCombo.indexOf('(') + 1, responsavelCombo.indexOf(')'));
+                }
+                
+                Horta novaHorta = new Horta(
+                    txtNome.getText(),
+                    cbPlantacao.getValue(),
+                    Integer.parseInt(txtQuantidade.getText()),
+                    responsavelEmail,
+                    dpDataPlantacao.getValue().format(DATE_FORMATTER),
+                    txtLocalizacao.getText(),
+                    dataLimite
+                );
+                
+                // Executar verificação específica da nova horta em background
                 Task<Void> task = new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        DataLimiteService.verificarDataLimite();
+                        System.out.println("Verificando horta recém-criada: " + novaHorta.getNome());
+                        
+                        // Verificar se deve enviar notificação para esta horta específica
+                        java.time.LocalDate hoje = java.time.LocalDate.now();
+                        if (deveEnviarNotificacaoHorta(novaHorta, hoje)) {
+                            System.out.println("Enviando notificação para horta recém-criada...");
+                            enviarNotificacaoHorta(novaHorta);
+                            registrarNotificacaoHorta(novaHorta.getNome(), hoje);
+                        }
                         return null;
                     }
                 };
@@ -189,6 +215,106 @@ public class NovaHortaController {
             } else {
                 System.out.println("Data limite não é hoje. Não enviando notificação.");
             }
+        }
+    }
+    
+    // Métodos auxiliares para verificação específica da horta
+    private boolean deveEnviarNotificacaoHorta(Horta horta, java.time.LocalDate hoje) {
+        System.out.println("  Verificando se deve enviar notificação para: " + horta.getNome());
+        
+        if (horta.getDataLimiteColheita() == null || horta.getDataLimiteColheita().isEmpty()) {
+            System.out.println("  -> NÃO: Data limite vazia ou null");
+            return false;
+        }
+
+        try {
+            java.time.LocalDate dataLimite = java.time.LocalDate.parse(horta.getDataLimiteColheita(), DATE_FORMATTER);
+            System.out.println("  -> Data limite convertida: " + dataLimite.format(DATE_FORMATTER));
+            System.out.println("  -> Data atual: " + hoje.format(DATE_FORMATTER));
+            System.out.println("  -> São iguais? " + hoje.isEqual(dataLimite));
+            
+            if (hoje.isEqual(dataLimite)) {
+                boolean jaEnviada = notificacaoJaEnviadaHorta(horta.getNome(), hoje);
+                System.out.println("  -> Notificação já enviada hoje? " + jaEnviada);
+                return !jaEnviada;
+            } else {
+                System.out.println("  -> NÃO: Data atual diferente da data limite");
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao processar data limite da horta " + horta.getNome() + ": " + e.getMessage());
+            System.err.println("Data limite original: '" + horta.getDataLimiteColheita() + "'");
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    private boolean notificacaoJaEnviadaHorta(String nomeHorta, java.time.LocalDate data) {
+        try {
+            java.io.File arquivo = new java.io.File("data/notificacoes_enviadas.csv");
+            if (!arquivo.exists()) {
+                return false;
+            }
+
+            try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(arquivo))) {
+                String linha;
+                while ((linha = br.readLine()) != null) {
+                    String[] valores = linha.split(",");
+                    if (valores.length >= 2) {
+                        String horta = valores[0].replaceAll("^\"|\"$", "");
+                        String dataNotificacao = valores[1].replaceAll("^\"|\"$", "");
+                        
+                        if (horta.equals(nomeHorta) && dataNotificacao.equals(data.format(DATE_FORMATTER))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        } catch (java.io.IOException e) {
+            System.err.println("Erro ao verificar notificações enviadas: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    private void enviarNotificacaoHorta(Horta horta) {
+        try {
+            String emailResponsavel = horta.getResponsavel();
+            
+            System.out.println("=== ENVIANDO NOTIFICAÇÃO DE DATA LIMITE ===");
+            System.out.println("Horta: " + horta.getNome());
+            System.out.println("Email responsável: " + emailResponsavel);
+            System.out.println("Data limite: " + horta.getDataLimiteColheita());
+            
+            if (emailResponsavel != null && !emailResponsavel.isEmpty()) {
+                System.out.println("Chamando EmailService.sendDataLimiteEmail...");
+                ui.services.EmailService.sendDataLimiteEmail(emailResponsavel, horta);
+                System.out.println("Notificação de data limite enviada para: " + emailResponsavel);
+            } else {
+                System.err.println("ERRO: Email do responsável está vazio ou null");
+                System.err.println("Email responsável: '" + emailResponsavel + "'");
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar notificação de data limite: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private void registrarNotificacaoHorta(String nomeHorta, java.time.LocalDate data) {
+        try {
+            java.io.File arquivo = new java.io.File("data/notificacoes_enviadas.csv");
+            if (arquivo.getParentFile() != null) {
+                arquivo.getParentFile().mkdirs();
+            }
+            boolean arquivoExiste = arquivo.exists();
+            
+            try (java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter(arquivo, true))) {
+                if (!arquivoExiste) {
+                    bw.write("horta,data_notificacao\n");
+                }
+                bw.write(String.format("\"%s\",\"%s\"\n", nomeHorta, data.format(DATE_FORMATTER)));
+            }
+        } catch (java.io.IOException e) {
+            System.err.println("Erro ao registrar notificação enviada: " + e.getMessage());
         }
     }
 

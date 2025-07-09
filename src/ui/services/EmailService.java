@@ -5,12 +5,39 @@ import java.util.Properties;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 import java.io.FileInputStream;
+import java.io.File;
 
 public class EmailService {
-    private static final String REMETENTE = System.getenv("EMAIL_REMETENTE");
-    private static final String SENHA = System.getenv("EMAIL_SENHA");
+    private static final String REMETENTE = "noreplyplantcare@gmail.com";
+    private static final String SENHA = "osxk rcqn kthd wkke";
     private static final String SMTP_HOST = "smtp.gmail.com";
     private static final String SMTP_PORT = "587";
+
+    private static Properties carregarConfiguracoes() {
+        Properties props = new Properties();
+        
+        // Configurações padrão
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", SMTP_HOST);
+        props.put("mail.smtp.port", SMTP_PORT);
+        
+        // Tentar carregar do arquivo de configuração
+        try {
+            File configFile = new File("email_config.properties");
+            if (configFile.exists()) {
+                System.out.println("Carregando configurações do arquivo email_config.properties");
+                props.load(new FileInputStream(configFile));
+            } else {
+                System.out.println("Arquivo email_config.properties não encontrado, usando configurações padrão");
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar configurações de email: " + e.getMessage());
+            System.out.println("Usando configurações padrão");
+        }
+        
+        return props;
+    }
 
     public static void sendColheitaEmail(String destinatario, Horta horta, String usuarioColheu, String dataHora) {
         if (destinatario == null || destinatario.isEmpty()) return;
@@ -67,11 +94,7 @@ public class EmailService {
         System.out.println("Remetente: " + REMETENTE);
         System.out.println("Senha configurada: " + (SENHA != null ? "SIM" : "NAO"));
         
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", SMTP_HOST);
-        props.put("mail.smtp.port", SMTP_PORT);
+        Properties props = carregarConfiguracoes();
 
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {

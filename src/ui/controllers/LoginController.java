@@ -84,7 +84,6 @@ public class LoginController {
         }
         if (registerUser(usuario, email, tipoAcesso)) {
             lblMensagem.setText("Usuário cadastrado com sucesso!");
-            limparCampos();
         } else {
             lblMensagem.setText("Usuário já existe!");
         }
