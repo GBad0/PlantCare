@@ -5,12 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ui.models.Horta;
+import ui.services.EmailService;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.concurrent.Task;
+import javafx.application.Platform;
 
 public class ColheitaController {
     @FXML private TableView<Horta> tabelaHortas;
@@ -22,6 +25,7 @@ public class ColheitaController {
     @FXML private TableColumn<Horta, String> colLocalizacao;
     @FXML private Button btnColher;
     @FXML private Button btnHistorico;
+    @FXML private ProgressIndicator loadingIndicator;
 
     private ObservableList<Horta> hortas = FXCollections.observableArrayList();
     private static final String HORTAS_CSV = "data/hortas.csv";
@@ -47,13 +51,15 @@ public class ColheitaController {
                 if (parts.length >= 6) {
                     int quantidade = Integer.parseInt(parts[2].replaceAll("\\D", ""));
                     if (quantidade > 0) {
+                        String dataLimiteColheita = parts.length >= 7 ? parts[6].replaceAll("\"", "") : "";
                         hortas.add(new Horta(
                             parts[0].replaceAll("\"", ""),
                             parts[1].replaceAll("\"", ""),
                             quantidade,
                             parts[3].replaceAll("\"", ""),
                             parts[4].replaceAll("\"", ""),
-                            parts[5].replaceAll("\"", "")
+                            parts[5].replaceAll("\"", ""),
+                            dataLimiteColheita
                         ));
                     }
                 }
@@ -71,12 +77,45 @@ public class ColheitaController {
             mostrarAlerta("Selecione uma horta para colher.");
             return;
         }
-        // Salva colheita no histórico
-        salvarColheita(selecionada);
-        // Zera sementes no CSV
-        atualizarQuantidadeHorta(selecionada.getNome(), 0);
-        carregarHortas();
-        mostrarAlerta("Colheita realizada!");
+        loadingIndicator.setVisible(true);
+        btnColher.setDisable(true);
+        btnHistorico.setDisable(true);
+
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                salvarColheita(selecionada);
+                atualizarQuantidadeHorta(selecionada.getNome(), 0);
+                String responsavelEmail = selecionada.getResponsavel();
+                if (responsavelEmail != null && responsavelEmail.contains("(") && responsavelEmail.contains(")")) {
+                    responsavelEmail = responsavelEmail.substring(responsavelEmail.indexOf('(') + 1, responsavelEmail.indexOf(')'));
+                }
+                String usuarioColheu = System.getProperty("user.name");
+                String dataHora = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                EmailService.sendColheitaEmail(responsavelEmail, selecionada, usuarioColheu, dataHora);
+                return null;
+            }
+            @Override
+            protected void succeeded() {
+                Platform.runLater(() -> {
+                    carregarHortas();
+                    loadingIndicator.setVisible(false);
+                    btnColher.setDisable(false);
+                    btnHistorico.setDisable(false);
+                    mostrarAlerta("Colheita realizada!");
+                });
+            }
+            @Override
+            protected void failed() {
+                Platform.runLater(() -> {
+                    loadingIndicator.setVisible(false);
+                    btnColher.setDisable(false);
+                    btnHistorico.setDisable(false);
+                    mostrarAlerta("Erro ao realizar colheita!");
+                });
+            }
+        };
+        new Thread(task).start();
     }
 
     private void salvarColheita(Horta horta) {

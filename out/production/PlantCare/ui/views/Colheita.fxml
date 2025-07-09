@@ -29,6 +29,7 @@
             </columnResizePolicy>
         </TableView>
     </VBox>
+    <ProgressIndicator fx:id="loadingIndicator" visible="false" maxWidth="60" maxHeight="60" VBox.vgrow="NEVER"/>
     <HBox spacing="15" alignment="CENTER_RIGHT" maxWidth="900">
         <Button text="Colher" fx:id="btnColher" onAction="#handleColher" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120; -fx-pref-height: 40; -fx-background-radius: 5;"/>
         <Button text="Histórico de Colheitas" fx:id="btnHistorico" onAction="#handleHistorico" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 180; -fx-pref-height: 40; -fx-background-radius: 5;"/>
