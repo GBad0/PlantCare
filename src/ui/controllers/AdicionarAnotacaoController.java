@@ -6,9 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
+import javafx.concurrent.Task;
+import javafx.application.Platform;
+import ui.services.EmailService;
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -19,6 +23,9 @@ public class AdicionarAnotacaoController {
     @FXML private TextField txtAutor;
     @FXML private DatePicker datePicker;
     @FXML private VBox rootPane;
+    @FXML private VBox progressContainer;
+    @FXML private ProgressIndicator progressIndicator;
+    @FXML private Label progressLabel;
 
     private static final String ARQUIVO_CSV = "data/anotacoes.csv";
     private static final String ARQUIVO_HORTAS = "data/hortas.csv";
@@ -61,8 +68,15 @@ public class AdicionarAnotacaoController {
                 linhas.add(formatarLinhaCsv());
                 Files.write(path, linhas);
                 
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Anotação salva com sucesso!");
-                navegarParaListaAnotacoes();
+                // Obter dados para o email
+                String nomeHorta = cbHorta.getValue();
+                String autorAnotacao = txtAutor.getText().trim();
+                String tituloAnotacao = txtTitulo.getText().trim();
+                String descricaoAnotacao = txtDescricao.getText().trim();
+                String dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                
+                // Enviar email em background
+                enviarEmailNotificacao(nomeHorta, autorAnotacao, tituloAnotacao, descricaoAnotacao, dataHora);
                 
             } catch (IOException e) {
                 mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível salvar a anotação: " + e.getMessage());
@@ -133,6 +147,76 @@ public class AdicionarAnotacaoController {
         } else {
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível encontrar o painel principal para exibir a lista de anotações.");
         }
+    }
+
+    private void enviarEmailNotificacao(String nomeHorta, String autorAnotacao, String tituloAnotacao, String descricaoAnotacao, String dataHora) {
+        // Mostrar indicador de progresso
+        progressContainer.setVisible(true);
+        
+        Task<Void> emailTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                // Buscar email do responsável pela horta
+                String emailResponsavel = buscarEmailResponsavel(nomeHorta);
+                
+                if (emailResponsavel != null && !emailResponsavel.isEmpty()) {
+                    EmailService.sendAnotacaoEmail(emailResponsavel, nomeHorta, autorAnotacao, tituloAnotacao, descricaoAnotacao, dataHora);
+                }
+                
+                return null;
+            }
+        };
+        
+        emailTask.setOnSucceeded(e -> {
+            progressContainer.setVisible(false);
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Anotação salva e notificação enviada com sucesso!");
+            limparCampos();
+            navegarParaListaAnotacoes();
+        });
+        
+        emailTask.setOnFailed(e -> {
+            progressContainer.setVisible(false);
+            mostrarAlerta(Alert.AlertType.WARNING, "Aviso", "Anotação salva, mas houve um problema ao enviar a notificação por email.");
+            limparCampos();
+            navegarParaListaAnotacoes();
+        });
+        
+        new Thread(emailTask).start();
+    }
+    
+    private String buscarEmailResponsavel(String nomeHorta) {
+        try {
+            // Buscar o responsável pela horta
+            String emailResponsavel = null;
+            try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_HORTAS))) {
+                br.readLine(); // Pular cabeçalho
+                String linha;
+                while ((linha = br.readLine()) != null) {
+                    String[] valores = linha.split(",");
+                    if (valores.length > 3) {
+                        String hortaNome = valores[0].replaceAll("^\"|\"$", "");
+                        if (hortaNome.equals(nomeHorta)) {
+                            emailResponsavel = valores[3].replaceAll("^\"|\"$", "");
+                            return emailResponsavel; // Retorna diretamente o email
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void limparCampos() {
+        txtTitulo.clear();
+        txtDescricao.clear();
+        cbHorta.getSelectionModel().clearSelection();
+        txtAutor.clear();
+        datePicker.setValue(LocalDate.now());
+        
+        // Focar no primeiro campo para facilitar nova entrada
+        txtTitulo.requestFocus();
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
