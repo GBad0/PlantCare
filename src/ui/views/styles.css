@@ -111,10 +111,11 @@
     -fx-border-color: transparent;
 }
 
+/* Cabeçalho da tabela */
 .table-view .column-header-background {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #e0e0e0;
     -fx-background-radius: 10 10 0 0;
-    -fx-padding: 5px;
+    -fx-padding: 8px;
 }
 
 .table-view .column-header, .table-view .filler {
@@ -124,23 +125,38 @@
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #2e7d32;
+    -fx-text-fill: #388e3c;
     -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-padding: 0 0 0 8px;
 }
 
-/* Estilo das células */
+/* Linhas alternadas */
 .table-row-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-padding: 5px;
+    -fx-padding: 10px 5px;
+    -fx-font-size: 14px;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: rgba(0, 0, 0, 0.02);
+    -fx-background-color: #f5f7fa;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #ffffff;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: rgba(76, 175, 80, 0.2);
+    -fx-background-color: #C8E6C9;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e3f2fd;
+}
+
+.table-cell {
+    -fx-padding: 8px 6px;
 }
 
 /* Remover borda ao redor da tabela */

@@ -51,13 +51,16 @@ public class LoginController {
     @FXML
     private void successLogin() {
         try {
-            Parent dashboard = FXMLLoader.load(getClass().getResource("/ui/views/MainDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/views/MainDashboard.fxml"));
+            Parent dashboard = loader.load();
+            MainDashboardController controller = loader.getController();
+            if (controller != null) {
+                controller.setTipoAcessoUsuario(cbTipoAcesso.getValue());
+            }
             Stage currentStage = (Stage) txtUsuario.getScene().getWindow();
-            
             currentStage.setScene(new Scene(dashboard));
             currentStage.setFullScreen(true); // Mantém tela cheia
             currentStage.show();
-            
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro ao carregar a tela principal: " + e.getMessage());

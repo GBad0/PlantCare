@@ -27,7 +27,7 @@
                     <!-- Seção Hortas -->
                     <Label text="HORTAS" styleClass="menu-section-label"/>
                     <Button text="📋 Listar Hortas" onAction="#showHortasList" styleClass="menu-button"/>
-                    <Button text="🌱 Adicionar Horta" onAction="#showNewHorta" styleClass="menu-button"/>
+                    <Button fx:id="btnAdicionarHorta" text="🌱 Adicionar Horta" onAction="#showNewHorta" styleClass="menu-button"/>
                     
                     <!-- Seção Anotações -->
                     <Label text="ANOTAÇÕES" styleClass="menu-section-label"/>

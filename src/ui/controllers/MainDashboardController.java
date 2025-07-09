@@ -8,11 +8,21 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 
 public class MainDashboardController {
     @FXML private StackPane contentArea;
+    @FXML private Button btnAdicionarHorta;
+    private String tipoAcessoUsuario = "";
+
+    public void setTipoAcessoUsuario(String tipo) {
+        this.tipoAcessoUsuario = tipo;
+        if (btnAdicionarHorta != null) {
+            btnAdicionarHorta.setVisible(!"Ajudante".equalsIgnoreCase(tipo));
+        }
+    }
 
     @FXML
     private void initialize() {
@@ -20,6 +30,10 @@ public class MainDashboardController {
             System.err.println("ERRO: contentArea não foi injetado pelo FXMLLoader");
         } else {
             System.out.println("INFO: contentArea foi inicializado com sucesso");
+        }
+        // Esconde o botão se o tipo já estiver setado antes do initialize
+        if (btnAdicionarHorta != null && "Ajudante".equalsIgnoreCase(tipoAcessoUsuario)) {
+            btnAdicionarHorta.setVisible(false);
         }
     }
 
