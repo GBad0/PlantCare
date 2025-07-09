@@ -77,6 +77,10 @@ public class LoginController {
             lblMensagem.setText("Preencha todos os campos!");
             return;
         }
+        if (!isEmailValido(email)) {
+            lblMensagem.setText("Digite um e-mail válido!");
+            return;
+        }
         if (registerUser(usuario, email, tipoAcesso)) {
             lblMensagem.setText("Usuário cadastrado com sucesso!");
         } else {
@@ -131,6 +135,11 @@ public class LoginController {
             lblMensagem.setText("Erro ao salvar usuário: " + e.getMessage());
             return false;
         }
+    }
+
+    private boolean isEmailValido(String email) {
+        // Regex simples para validar e-mail
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 
     private void showError(String message) {
