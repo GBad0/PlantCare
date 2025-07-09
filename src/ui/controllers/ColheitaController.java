@@ -1,0 +1,141 @@
+package ui.controllers;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import ui.models.Horta;
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ColheitaController {
+    @FXML private TableView<Horta> tabelaHortas;
+    @FXML private TableColumn<Horta, String> colNome;
+    @FXML private TableColumn<Horta, String> colPlantacao;
+    @FXML private TableColumn<Horta, Integer> colQuantidade;
+    @FXML private TableColumn<Horta, String> colResponsavel;
+    @FXML private TableColumn<Horta, String> colData;
+    @FXML private TableColumn<Horta, String> colLocalizacao;
+    @FXML private Button btnColher;
+    @FXML private Button btnHistorico;
+
+    private ObservableList<Horta> hortas = FXCollections.observableArrayList();
+    private static final String HORTAS_CSV = "data/hortas.csv";
+    private static final String COLHEITAS_CSV = "data/colheitas.csv";
+
+    @FXML
+    private void initialize() {
+        colNome.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getNome()));
+        colPlantacao.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getPlantacao()));
+        colQuantidade.setCellValueFactory(cell -> new javafx.beans.property.SimpleIntegerProperty(cell.getValue().getQuantidade()).asObject());
+        colResponsavel.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getResponsavel()));
+        colData.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getDataPlantacao()));
+        colLocalizacao.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getLocalizacao()));
+        carregarHortas();
+    }
+
+    private void carregarHortas() {
+        hortas.clear();
+        try (BufferedReader br = new BufferedReader(new FileReader(HORTAS_CSV))) {
+            String line = br.readLine(); // header
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 6) {
+                    int quantidade = Integer.parseInt(parts[2].replaceAll("\\D", ""));
+                    if (quantidade > 0) {
+                        hortas.add(new Horta(
+                            parts[0].replaceAll("\"", ""),
+                            parts[1].replaceAll("\"", ""),
+                            quantidade,
+                            parts[3].replaceAll("\"", ""),
+                            parts[4].replaceAll("\"", ""),
+                            parts[5].replaceAll("\"", "")
+                        ));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tabelaHortas.setItems(hortas);
+    }
+
+    @FXML
+    private void handleColher() {
+        Horta selecionada = tabelaHortas.getSelectionModel().getSelectedItem();
+        if (selecionada == null) {
+            mostrarAlerta("Selecione uma horta para colher.");
+            return;
+        }
+        // Salva colheita no histórico
+        salvarColheita(selecionada);
+        // Zera sementes no CSV
+        atualizarQuantidadeHorta(selecionada.getNome(), 0);
+        carregarHortas();
+        mostrarAlerta("Colheita realizada!");
+    }
+
+    private void salvarColheita(Horta horta) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(COLHEITAS_CSV, true))) {
+            String dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+            bw.write(horta.getNome() + "," + horta.getPlantacao() + "," + horta.getQuantidade() + "," + dataHora + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void atualizarQuantidadeHorta(String nome, int novaQuantidade) {
+        List<String> linhas = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(HORTAS_CSV))) {
+            String header = br.readLine();
+            linhas.add(header);
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 6 && parts[0].replaceAll("\"", "").equals(nome)) {
+                    parts[2] = String.valueOf(novaQuantidade);
+                    linhas.add(String.join(",", parts));
+                } else {
+                    linhas.add(line);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(HORTAS_CSV))) {
+            for (String l : linhas) {
+                bw.write(l + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleHistorico() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Histórico de Colheitas");
+        alert.setHeaderText("Colheitas realizadas:");
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(COLHEITAS_CSV))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+        } catch (Exception e) {
+            sb.append("Nenhum histórico encontrado.");
+        }
+        alert.setContentText(sb.toString());
+        alert.showAndWait();
+    }
+
+    private void mostrarAlerta(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+} 
