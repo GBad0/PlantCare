@@ -66,7 +66,7 @@ $javaFiles = Get-ChildItem -Path $SRC_DIR -Recurse -Filter "*.java" | ForEach-Ob
 $javaFilesString = $javaFiles -join ' '
 
 # Comando javac completo
-$compileCmd = "javac --module-path `"$PATH_TO_FX`" --add-modules javafx.controls,javafx.fxml,javafx.base -cp $classpathQuoted -d `"$OUT_DIR`" $javaFilesString"
+$compileCmd = "javac -encoding UTF-8 --module-path `"$PATH_TO_FX`" --add-modules javafx.controls,javafx.fxml,javafx.base -cp $classpathQuoted -d `"$OUT_DIR`" $javaFilesString"
 
 Write-Host "Executando compilacao..."
 Write-Host "Classpath: $classpathQuoted"
